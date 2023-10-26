@@ -1,0 +1,52 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	chosen {
+		zephyr,console = &cdc_acm_uart0;
+		zephyr,shell-uart = &cdc_acm_uart0;
+	};
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
+
+sid_semtech: &spi1 {
+	compatible = "nordic,nrf-spim";
+	clock-frequency = <DT_FREQ_M(8)>;
+	/delete-property/ cs-gpios;
+
+	lora: lora@0 {
+	    status = "disabled";
+	};
+};
+
+/{
+ 	semtech_sx1262_gpios{
+ 		compatible = "gpio-keys";
+		semtech_sx1262_cs: cs {
+			gpios = <&gpio1 10 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 CS";
+		};
+ 		semtech_sx1262_reset_gpios: reset {
+			gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 Reset";
+		};
+		semtech_sx1262_busy_gpios: busy {
+			gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Busy";
+		};
+		semtech_sx1262_antenna_enable_gpios: antena_enable {
+			gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Antena Enable";
+		};
+		semtech_sx1262_dio1_gpios: dio1 {
+			gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 DIO1";
+		};
+ 	};
+};

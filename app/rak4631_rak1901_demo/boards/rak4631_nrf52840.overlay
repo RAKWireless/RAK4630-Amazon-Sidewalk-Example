@@ -1,0 +1,93 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	chosen {
+		zephyr,console = &cdc_acm_uart0;
+		zephyr,shell-uart = &cdc_acm_uart0;
+        zephyr,ieee802154 = &ieee802154;
+	};
+};
+
+&pinctrl {
+    i2c0_default: i2c0_default {
+       group1 {
+          psels = <NRF_PSEL(TWIM_SDA, 0, 13)>,
+                  <NRF_PSEL(TWIM_SCL, 0, 14)>;
+       };
+    };
+    i2c0_sleep: i2c0_sleep {
+       group1 {
+          psels = <NRF_PSEL(TWIM_SDA, 0, 13)>,
+                  <NRF_PSEL(TWIM_SCL, 0, 14)>;
+                  low-power-enable;
+       };
+    };
+
+};
+&i2c0 {
+    compatible = "nordic,nrf-twim";
+	status = "okay";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+	clock-frequency = <I2C_BITRATE_FAST>;
+	rak1901@70 {
+		status = "okay";
+        compatible = "rak1901";
+		reg = <0x70>;
+	};
+};
+
+&gpio1 {
+    sense-edge-mask = < 0xffff3b9f >;
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
+
+&radio{
+    ieee802154: ieee802154 {
+                status = "okay";
+    };
+};
+
+sid_semtech: &spi1 {
+	compatible = "nordic,nrf-spim";
+	clock-frequency = <DT_FREQ_M(8)>;
+	/delete-property/ cs-gpios;
+
+	lora: lora@0 {
+	    status = "disabled";
+	};
+};
+
+/{
+ 	semtech_sx1262_gpios{
+ 		compatible = "gpio-keys";
+		semtech_sx1262_cs: cs {
+			gpios = <&gpio1 10 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 CS";
+		};
+ 		semtech_sx1262_reset_gpios: reset {
+			gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 Reset";
+		};
+		semtech_sx1262_busy_gpios: busy {
+			gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Busy";
+		};
+		semtech_sx1262_antenna_enable_gpios: antena_enable {
+			gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Antena Enable";
+		};
+		semtech_sx1262_dio1_gpios: dio1 {
+			gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 DIO1";
+		};
+ 	};
+};

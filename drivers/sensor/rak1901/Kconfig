@@ -1,0 +1,12 @@
+# AHT20 temperature and humidity sensor configuration options
+
+# SPDX-License-Identifier: Apache-2.0
+
+config RAK1901
+	bool "RAK1901 Temperature and Humidity Sensor"
+	default y
+	depends on DT_HAS_RAK1901_ENABLED
+	select I2C
+	select CRC
+	help
+	  Enable driver for RAK1901 temperature and humidity sensors.

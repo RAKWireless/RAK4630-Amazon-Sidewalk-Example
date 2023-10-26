@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASAIR AHT20 humidity and temperature sensor
+
+compatible: "asair,aht20"
+
+include: [sensor-device.yaml, i2c-device.yaml]
+

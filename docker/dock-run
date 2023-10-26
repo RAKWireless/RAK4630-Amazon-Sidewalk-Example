@@ -1,0 +1,103 @@
+#!/bin/bash
+
+TAG="ncs-builder"
+ENTRYPOINT="/bin/sh -c"
+
+usage()
+{
+    cat << EOF
+usage: [ENVOPT] $0 [OPTIONS] [COMMAND] [ARGS]
+ENVOPT:
+DOCK_OPT=... : additional docker options
+OPTIONS:
+  --root : run as root instead of user this also skips
+           mounting of home, passwd,...
+EOF
+    exit 255
+}
+
+run_docker()
+{
+    # build docker image if it does not exist
+    ( cd `dirname $0`; docker build --quiet --tag "$TAG" . )
+
+    # find top-most git repo
+    # submodules use dummy .git files instead of directories
+    topgit=$(pwd \
+        | tr '/' '\n' \
+        | awk '{x=x $1 "/"; print x ".git"}' \
+        | xargs -n1 sh -c 'test -d $0 && echo $0' \
+        | head -n1 \
+        | xargs dirname \
+        | grep .)
+
+    ARGS=(
+    --cap-add SYS_PTRACE
+    --security-opt seccomp=unconfined
+    --rm
+    --env TERM
+    --interactive
+    --tmpfs=/tmp:exec
+    -edebian_chroot=DOCKER:"$TAG"
+    -h"$TAG"
+    )
+
+    [ -t 1 -a -t 0 ] && {
+        ARGS+=("--tty")
+    }
+
+    [ "${ROOT:-no}" = "no" ] && {
+        ARGS+=(
+        -eHOME="$HOME"
+        #-v"$topgit:$topgit"
+        -v"$(pwd):$(pwd)"
+        -v"$HOME:$HOME"
+        -v/etc/passwd:/etc/passwd
+        -v/etc/group:/etc/group
+        -v /etc/localtime:/etc/localtime:ro
+        -u$UID:$UID
+        )
+    }
+
+    ARGS+=(-w"$PWD")
+
+    ARGS+=($DOCK_OPT)
+
+    ARGS+=("$TAG")
+
+    # Run bash by default
+    [ "$#" -eq 0 ] && { ARGS+=("/bin/bash" "-i"); }
+
+    echo docker run "${ARGS[@]}" "$@"
+    echo
+    docker run "${ARGS[@]}" "$@"
+
+}
+
+#
+# Parse arguments
+#
+while true
+do
+    case "$1" in
+        --)
+            shift
+            break
+            ;;
+        -h)
+            usage
+            ;;
+        --root)
+            ROOT="yes"
+            ;;
+        -*)
+            echo "Unknown argument: $1"
+            exit 255
+            ;;
+        *)
+            break
+    esac
+    shift
+done
+
+run_docker "$@"

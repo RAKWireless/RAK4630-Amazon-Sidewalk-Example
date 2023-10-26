@@ -1,0 +1,26 @@
+# Copyright (c) 2021 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  self:
+    path: rak-sid
+    west-commands: scripts/west-commands.yml
+    userdata:
+      patches_dirs:
+        - patches/west-sidewalk
+
+  remotes:
+    - name: ncs
+      url-base: https://github.com/nrfconnect
+
+  projects:
+    - name: nrf
+      remote: ncs
+      repo-path: sdk-nrf
+      revision: v2.4.0
+      import: true
+    - name: sidewalk
+      remote: ncs
+      repo-path: sdk-sidewalk
+      revision: v1.14.4
+      import: true

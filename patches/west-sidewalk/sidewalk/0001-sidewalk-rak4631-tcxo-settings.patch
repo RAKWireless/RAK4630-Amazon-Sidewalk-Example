@@ -1,0 +1,32 @@
+From a5a312c040480753fc9362c463126a0f07316fae Mon Sep 17 00:00:00 2001
+From: Kenneth Lu <kenneth.lu@rakwireless.com>
+Date: Wed, 10 May 2023 16:09:54 +0800
+Subject: [PATCH] sidewalk: rak4631 tcxo settings
+
+RAK4631 using an external TCXO reference voltage contrlled by SX1262
+DIO3, it has to set the DIO3 as the TCXO control otherwise sx1262
+wouldn't work.
+
+Signed-off-by: Kenneth Lu <kenneth.lu@rakwireless.com>
+---
+ subsys/config/common/src/app_subGHz_config.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/subsys/config/common/src/app_subGHz_config.c b/subsys/config/common/src/app_subGHz_config.c
+index ddc8a1c..72ee002 100644
+--- a/subsys/config/common/src/app_subGHz_config.c
++++ b/subsys/config/common/src/app_subGHz_config.c
+@@ -111,7 +111,9 @@ static radio_sx126x_device_config_t radio_sx1262_cfg = {
+ 	.pa_cfg_callback = radio_sx1262_pa_cfg,
+ 
+ 	.tcxo = {
+-		.ctrl = SX126X_TCXO_CTRL_NONE,
++		.ctrl = SX126X_TCXO_CTRL_DIO3,
++		.voltage = RADIO_SX126X_TCXO_CTRL_3_3V,
++		.timeout = 320,
+ 	},
+ 
+ 	.regional_config = {
+-- 
+2.34.1
+

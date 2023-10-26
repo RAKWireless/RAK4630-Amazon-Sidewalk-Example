@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TAG="ncs-builder"
+NRF_VER=v2.4-branch
+
+cd $(dirname $0)
+
+echo ============ building docker image: $TAG ============
+
+docker build --tag "$TAG" .

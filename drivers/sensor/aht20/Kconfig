@@ -1,0 +1,12 @@
+# AHT20 temperature and humidity sensor configuration options
+
+# SPDX-License-Identifier: Apache-2.0
+
+config AHT20
+	bool "AHT20 Temperature and Humidity Sensor"
+	default y
+	depends on DT_HAS_ASAIR_AHT20_ENABLED
+	select I2C
+	select CRC
+	help
+	  Enable driver for AHT20 temperature and humidity sensors.

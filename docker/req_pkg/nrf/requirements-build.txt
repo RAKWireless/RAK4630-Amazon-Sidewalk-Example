@@ -1,0 +1,8 @@
+cbor2>=5.4.2.post1
+clang-format
+ecdsa
+imagesize>=1.2.0
+intelhex
+protobuf
+pylint
+zcbor==0.5.1
