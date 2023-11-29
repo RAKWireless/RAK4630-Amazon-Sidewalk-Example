@@ -108,8 +108,8 @@ static void cd_sid_status_changed(const struct sid_status *status, void *context
 		k_timeout_t delay = K_MSEC(CONFIG_SM_TIMER_DEMO_CAPABILITY_PERIOD_MS);
 
 		if (app_context->app_state == DEMO_APP_STATE_REGISTERED) {
-		 	app_context->app_state = DEMO_APP_STATE_NOTIFY_SENSOR_DATA;
-		// } else if (app_context->app_state == DEMO_APP_STATE_NOTIFY_SENSOR_DATA) {
+		 	app_context->app_state = DEMO_APP_STATE_NOTIFY_CAPABILITY;
+		} else if (app_context->app_state == DEMO_APP_STATE_NOTIFY_SENSOR_DATA) {
 			delay = K_MSEC(CONFIG_SM_TIMER_DEMO_NOTIFY_SENSOR_DATA_PERIOD_MS);
 		}
 		sm_cap_timer_set_and_run(delay);

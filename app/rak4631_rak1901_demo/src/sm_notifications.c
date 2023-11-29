@@ -20,6 +20,10 @@ LOG_MODULE_REGISTER(sm_notify, CONFIG_SIDEWALK_LOG_LEVEL);
 #define SENSOR_NOTIFY_PAYLOAD_SIZE_MAX 64
 #define CAPABILITY_NOTIFY_PAYLOAD_SIZE_MAX 32
 
+static uint8_t button_id_arr[4]={0,1,2,3};
+static uint8_t led_id_arr[4] = {0,1,2,3};
+
+
 void sm_notify_capability(app_context_t *app_context)
 {
 	assert(app_context);
@@ -27,11 +31,11 @@ void sm_notify_capability(app_context_t *app_context)
 	struct sid_parse_state state = {};
 	enum sid_link_type link_type = sm_active_link_type_get(app_context);
 	struct sid_demo_capability_discovery cap = {
-		// .num_buttons = 0 /*DEMO_BUTTONS_MAX*/, // Edited by Sercan ERAT
-		// .button_id_arr = 0 /*sm_buttons_id_array_get()*/, // Edited by Sercan ERAT
-		// .num_leds = 0 /* sm_leds_id_array_size_get() */,  // Edited by Sercan ERAT
-		// .led_id_arr = 0 /* sm_leds_id_array_get() */,  // Edited by Sercan ERAT
-		// .temp_sensor = SID_DEMO_TEMPERATURE_SENSOR_UNITS_CELSIUS,
+		.num_buttons = 0 ,
+		.button_id_arr = &button_id_arr , 
+		.num_leds = 0 ,
+		.led_id_arr = &led_id_arr ,
+		.temp_sensor = SID_DEMO_TEMPERATURE_SENSOR_UNITS_CELSIUS,
 	};
 
 	uint8_t temp_buffer[CAPABILITY_NOTIFY_PAYLOAD_SIZE_MAX] = { 0 };

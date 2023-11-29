@@ -229,10 +229,10 @@ static void sidewalk_main_task(void *context, void *dummy1, void *dummy2)
 						}
 					}
 				} 
-				// else if (app_context->app_state ==
-				// 	   DEMO_APP_STATE_NOTIFY_CAPABILITY) {
-				// 	sm_notify_capability(app_context);
-				// } 
+				else if (app_context->app_state ==
+					DEMO_APP_STATE_NOTIFY_CAPABILITY) {
+					sm_notify_capability(app_context);
+				} 
 				else if (app_context->app_state ==
 					   DEMO_APP_STATE_NOTIFY_SENSOR_DATA) {
 						

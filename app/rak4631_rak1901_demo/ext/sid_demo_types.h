@@ -63,20 +63,20 @@ enum sid_demo_msg_desc_attributes {
  * Sid demo tag IDs and their sizes
  */
 enum sid_demo_tag_id {
-    // SID_DEMO_TAG_NUMBER_OF_BUTTONS = 0x1,
-    // SID_DEMO_TAG_NUMBER_OF_LEDS = 0x2,
-    // SID_DEMO_TAG_LED_ON_ACTION_REQ  = 0x3,
-    // SID_DEMO_TAG_LED_OFF_ACTION_REQ = 0x4,
-    // SID_DEMO_TAG_BUTTON_PRESS_ACTION_NOTIFY = 0x5,
-    // SID_DEMO_TAG_TEMPERATURE_SENSOR_DATA_NOTIFY = 0x6,
+    SID_DEMO_TAG_NUMBER_OF_BUTTONS = 0x1,
+    SID_DEMO_TAG_NUMBER_OF_LEDS = 0x2,
+    SID_DEMO_TAG_LED_ON_ACTION_REQ  = 0x3,
+    SID_DEMO_TAG_LED_OFF_ACTION_REQ = 0x4,
+    SID_DEMO_TAG_BUTTON_PRESS_ACTION_NOTIFY = 0x5,
+    SID_DEMO_TAG_TEMPERATURE_SENSOR_DATA_NOTIFY = 0x6,
     SID_DEMO_TAG_RAK_SIDEWALK_DATA_NOTIFY = 0x6,
     SID_DEMO_TAG_CURRENT_GPS_TIME_IN_SECONDS = 0x7,
     SID_DEMO_TAG_DL_LATENCY_IN_SECONDS = 0x8,
-    // SID_DEMO_TAG_LED_ON_RESP = 0x9,
-    // SID_DEMO_TAG_LED_OFF_RESP = 0xA,
-    // SID_DEMO_TAG_TEMP_SENSOR_AVAILABLE_AND_UNIT_REPRESENTATION = 0xB,
+    SID_DEMO_TAG_LED_ON_RESP = 0x9,
+    SID_DEMO_TAG_LED_OFF_RESP = 0xA,
+    SID_DEMO_TAG_TEMP_SENSOR_AVAILABLE_AND_UNIT_REPRESENTATION = 0xB,
     SID_DEMO_TAG_LINK_TYPE = 0xC,
-    // SID_DEMO_TAG_BUTTON_PRESSED_RESP = 0xD,
+    SID_DEMO_TAG_BUTTON_PRESSED_RESP = 0xD,
     SID_DEMO_TAG_LAST,
     SID_DEMO_TAG_ID_MAX = 0x40
 };
@@ -107,19 +107,19 @@ struct sid_demo_msg {
     uint8_t *payload;
 };
 
-// enum sid_demo_temperature_sensor {
-//     SID_DEMO_TEMPERATURE_SENSOR_NOT_SUPPORTED = 0,
-//     SID_DEMO_TEMPERATURE_SENSOR_UNITS_CELSIUS = 1,
-//     SID_DEMO_TEMPERATURE_SENSOR_UNITS_FARENHEIT = 2,
-//     SID_DEMO_TEMPERATURE_SENSOR_LAST,
-// };
+enum sid_demo_temperature_sensor {
+    SID_DEMO_TEMPERATURE_SENSOR_NOT_SUPPORTED = 0,
+    SID_DEMO_TEMPERATURE_SENSOR_UNITS_CELSIUS = 1,
+    SID_DEMO_TEMPERATURE_SENSOR_UNITS_FARENHEIT = 2,
+    SID_DEMO_TEMPERATURE_SENSOR_LAST,
+};
 
 struct sid_demo_capability_discovery {
-    // uint8_t num_buttons;
-    // uint8_t num_leds;
-    // enum sid_demo_temperature_sensor temp_sensor;
-    // uint8_t *button_id_arr;
-    // uint8_t *led_id_arr;
+    uint8_t num_buttons;
+    uint8_t num_leds;
+    enum sid_demo_temperature_sensor temp_sensor;
+    uint8_t *button_id_arr;
+    uint8_t *led_id_arr;
     uint8_t link_type;
 };
 

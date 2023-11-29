@@ -71,23 +71,23 @@ void sid_demo_app_capability_discovery_notification_serialize(struct sid_parse_s
                                                               struct sid_demo_capability_discovery *cap)
 {
     struct tl_in_tlv tl = {};
-    // if (cap->num_buttons) {
-    //     tl.len = cap->num_buttons;
-    //     tl.tag = SID_DEMO_TAG_NUMBER_OF_BUTTONS;
-    //     sid_write_entry_tlv_nbytes(state, &tl, cap->button_id_arr, cap->num_buttons);
-    // }
+    if (cap->num_buttons) {
+        tl.len = cap->num_buttons;
+        tl.tag = SID_DEMO_TAG_NUMBER_OF_BUTTONS;
+        sid_write_entry_tlv_nbytes(state, &tl, cap->button_id_arr, cap->num_buttons);
+    }
 
-    // if (cap->num_leds) {
-    //     tl.len = cap->num_leds;
-    //     tl.tag = SID_DEMO_TAG_NUMBER_OF_LEDS;
-    //     sid_write_entry_tlv_nbytes(state, &tl, cap->led_id_arr, cap->num_leds);
-    // }
+    if (cap->num_leds) {
+        tl.len = cap->num_leds;
+        tl.tag = SID_DEMO_TAG_NUMBER_OF_LEDS;
+        sid_write_entry_tlv_nbytes(state, &tl, cap->led_id_arr, cap->num_leds);
+    }
 
-    // if (cap->temp_sensor > SID_DEMO_TEMPERATURE_SENSOR_NOT_SUPPORTED && cap->temp_sensor < SID_DEMO_TEMPERATURE_SENSOR_LAST) {
-    //     tl.len = sizeof(uint8_t);
-    //     tl.tag = SID_DEMO_TAG_TEMP_SENSOR_AVAILABLE_AND_UNIT_REPRESENTATION;
-    //     sid_write_entry_tlv_uint8(state, &tl, cap->temp_sensor);
-    // }
+    if (cap->temp_sensor > SID_DEMO_TEMPERATURE_SENSOR_NOT_SUPPORTED && cap->temp_sensor < SID_DEMO_TEMPERATURE_SENSOR_LAST) {
+        tl.len = sizeof(uint8_t);
+        tl.tag = SID_DEMO_TAG_TEMP_SENSOR_AVAILABLE_AND_UNIT_REPRESENTATION;
+        sid_write_entry_tlv_uint8(state, &tl, cap->temp_sensor);
+    }
 
     tl.len = sizeof(cap->link_type);
     tl.tag = SID_DEMO_TAG_LINK_TYPE;
