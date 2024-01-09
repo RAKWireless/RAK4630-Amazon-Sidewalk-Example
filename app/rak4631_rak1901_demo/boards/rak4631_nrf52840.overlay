@@ -82,7 +82,7 @@ sid_semtech: &spi1 {
 			label = "semtech_sx1262 Busy";
 		};
 		semtech_sx1262_antenna_enable_gpios: antena_enable {
-			gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
 			label = "semtech_sx1262 Antena Enable";
 		};
 		semtech_sx1262_dio1_gpios: dio1 {
