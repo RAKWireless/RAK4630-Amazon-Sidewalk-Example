@@ -38,6 +38,11 @@ west patch -a
 ### Build
 To build the application, run the following command:
 
+#### Start the toolchain environment
+```
+nrfutil toolchain-manager launch --shell
+```
+
 #### RAK4631 EVB
 - Sidewalk sensor_monitoring demo
 ```
