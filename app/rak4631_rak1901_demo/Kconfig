@@ -3,53 +3,44 @@
 #
 # SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
 #
-rsource "../../../sidewalk/samples/common/Kconfig.defconfig"
+rsource "../../../sidewalk/samples/sid_end_device/Kconfig.defconfig"
 
-config SM_TIMER_DEMO_CAPABILITY_PERIOD_MS
-                prompt "Capability period in ms"
-                int
-                default 5000
-                help
-                Delay in ms to wait after device is registered to send capability to cloud
+config SIDEWALK_SPI_BUS
+    default y
+    imply SPI
+    imply PM
+    imply PM_DEVICE
 
-config SM_TIMER_CONNECT_LINK_TYPE_1_DELAY_MS
-                prompt "BLE Conneciton request delay after inactivity in ms"
-                int
-                default 60000
-                help
-                        If operating in BLE mode the connection request has to be send before any message can be send.
-                        This config determines delay between connection requests
+config SID_END_DEVICE_TX_THREAD_STACK_SIZE
+    int
+    default 4096
 
-config SM_TIMER_CONNECT_LINK_TYPE_1_INIT_DELAY_MS
-                prompt "BLE Initial connection request delay in ms"
-                int
-                default 5000
-                help
-                        After device has been registered and time sync the connection request has to be send.
-                        This config determines the delay before first connection request
+config SID_END_DEVICE_RX_THREAD_STACK_SIZE
+    int
+    default 4096
 
-config SM_TIMER_DEMO_NOTIFY_SENSOR_DATA_PERIOD_MS
-                prompt "Sensor data sending period in ms"
-                int
-                default 25000
-                help
-                        Period between sending sensor messages from device to cloud.
-                        Those messages also contain the state of buttons.
+config SID_END_DEVICE_NOTIFY_DATA_PERIOD_MS
+    int "Notify period of sensor monitoring demo app"
+    default 60000
 
-config SM_TIMER_BUTTON_PRESS_CHECK_PERIOD_SECS
-                prompt "Sending button state period in seconds"
-                int
-                default 30
-                help
-                        Delay between sending Button update to cloud.
-                        Any notification send to cloud contain state of buttons, so if no message has been send for
-                        BUTTON_PRESS_CHECK_PERIOD_SECS, the button state will be send.
+config SID_END_DEVICE_TX_THREAD_PRIORITY
+    int
+    default 13
 
-config SM_TIMER_PROFILE_CHECK_TIMER_DELAY_MS
-                prompt "SubGHz change profile delay in ms"
-                int
-                default 60000
-                help
-                        In SubGHz configuration, this value determines when the transmition profile will be changed
+config SID_END_DEVICE_RX_THREAD_PRIORITY
+    int
+    default 14
+
+config SID_END_DEVICE_TX_THREAD_QUEUE_SIZE
+    int
+    default 10
+
+config SID_END_DEVICE_RX_THREAD_QUEUE_SIZE
+    int
+    default 4
+
+config RAK1901_MEASUREMENT_INTERVAL
+    int
+    default 60000
 
 source "Kconfig.zephyr"

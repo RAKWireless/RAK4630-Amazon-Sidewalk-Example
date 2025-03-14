@@ -32,7 +32,7 @@ west update
 To patch sidewalk subsys for RAK4631, run the following command:
 ```shell
 cd rak-sid
-west patch
+west patch -a
 ```
 
 ### Build
@@ -41,17 +41,13 @@ To build the application, run the following command:
 #### RAK4631 EVB
 - Sidewalk sensor_monitoring demo
 ```
-west build -p -b rak4631_nrf52840 app/rak4631_rak1901_demo/ -- -DOVERLAY_CONFIG="lora.conf"
-```
-- Sidewalk DUT
-```
-west build -p -b rak4631_nrf52840 app/rak4631_sid_dut/
+west build -p -b rak4631 app/rak4631_rak1901_demo/ -- -DOVERLAY_CONFIG="lora.conf"
 ```
 
 ### Build with docker(`ncs-builder`)
 To build application via docker, run the following command:
 ```
-./docker/dock-run west build -p -b rak4631_nrf52840 app/rak4631_rak1901_demo/ -- -DOVERLAY_CONFIG="lora.conf"
+./docker/dock-run west build -p -b rak4631 app/rak4631_rak1901_demo/ -- -DOVERLAY_CONFIG="lora.conf"
 ```
 
 
